@@ -19,7 +19,6 @@ Stack: **FastAPI · Celery · Redis · Docker**
 ## Roadmap
 
 ### Phase 1 — Core concepts
-> 2 weeks · read, draw diagrams, explain things to yourself
 
 #### Async systems
 
@@ -46,7 +45,7 @@ Key question to be able to answer: *"Why doesn't `time.sleep()` work inside an a
 
 Key question to be able to answer: *"If your worker crashes mid-task, what happens to the message?"*
 
-#### Kafka (concepts only)
+#### Kafka
 - Topics, partitions, offsets
 - Consumer groups and how multiple consumers share work
 - Why Kafka is a log, not a traditional queue
@@ -57,7 +56,6 @@ Key question to be able to answer: *"If your worker crashes mid-task, what happe
 ---
 
 ### Phase 2 — Tech stack
-> 3 weeks · install, run, break things locally
 
 #### FastAPI
 - `async def` route handlers and why they matter for throughput
@@ -89,7 +87,6 @@ Key question to be able to answer: *"If your worker crashes mid-task, what happe
 ---
 
 ### Phase 3 — Mini-project
-> 1–2 weeks · build it, break it, fix it
 
 #### Background job processor — async task API
 
@@ -142,7 +139,6 @@ GET /jobs/{job_id}
 ---
 
 ### Phase 4 — Production hardening
-> Ongoing · bolt these onto the mini-project
 
 - **Idempotent consumers** — if a task runs twice (due to retry), the result should be the same. Design tasks to be safe to re-run.
 - **Structured logging** — every log line includes `job_id`, `worker_id`, timestamp. No naked `print()`.
