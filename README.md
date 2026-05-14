@@ -1,5 +1,4 @@
-"# async-queue" 
-# async-queue-lab
+# async-queue
 
 > A structured self-study path to understand **Distributed Systems** from the ground up, starting with async execution and message queues — capped with one real mini-project.
 
