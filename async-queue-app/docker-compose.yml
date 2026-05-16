@@ -1,0 +1,56 @@
+services:
+
+  # ── Redis ────────────────────────────────────────────────────────────────────
+  # Acts as BOTH the Celery broker (holds the task queue) and
+  # the result backend (stores task outcomes).
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ── FastAPI app ──────────────────────────────────────────────────────────────
+  # Handles HTTP: enqueues jobs and serves status/result queries.
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/code/app        # Live-reload: code changes reflect without rebuild
+    environment:
+      - PYTHONPATH=/code
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ── Celery worker ─────────────────────────────────────────────────────────────
+  # Separate process that picks tasks off the Redis queue and executes them.
+  # You can scale this: `docker compose up --scale worker=3`
+  worker:
+    build: .
+    command: >
+      celery -A app.celery_app.celery worker
+        --loglevel=info
+        --concurrency=3
+        --hostname=worker@%h
+    volumes:
+      - ./app:/code/app
+    environment:
+      - PYTHONPATH=/code
+    depends_on:
+      redis:
+        condition: service_healthy
+    # Graceful shutdown: finish in-flight tasks before stopping (up to 30 s)
+    stop_grace_period: 30s
+
+  # ── Flower ───────────────────────────────────────────────────────────────────
+  # Web UI to watch tasks flow through the queue in real time.
