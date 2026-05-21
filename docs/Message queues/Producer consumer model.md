@@ -20,7 +20,13 @@ In modern systems, the buffer is usually managed by a broker like **RabbitMQ** o
 
 ```mermaid
 graph LR
-    P[Producer (Web Server)] -->|Publishes Message| Q[(Message Queue)]
-    Q -->|Consumes Message| C1[Consumer 1 (Worker)]
-    Q -->|Consumes Message| C2[Consumer 2 (Worker)]
-    Q -->|Consumes Message| C3[Consumer 3 (Worker)]
+    P[Producer (Web Server)]
+    Q[(Message Queue)]
+    C1[Consumer 1 (Worker)]
+    C2[Consumer 2 (Worker)]
+    C3[Consumer 3 (Worker)]
+
+    P -- Publishes Message --> Q
+    Q -- Consumes Message --> C1
+    Q -- Consumes Message --> C2
+    Q -- Consumes Message --> C3
