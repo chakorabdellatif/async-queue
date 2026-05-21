@@ -21,4 +21,3 @@ graph TD
     C[Service C (Producer)] -->|Send| B
     B -->|Route & Deliver| D[Service D (Consumer)]
     B -->|Route & Deliver| E[Service E (Consumer)]
-```

@@ -24,4 +24,3 @@ graph LR
     Q -->|Consumes Message| C1[Consumer 1 (Worker)]
     Q -->|Consumes Message| C2[Consumer 2 (Worker)]
     Q -->|Consumes Message| C3[Consumer 3 (Worker)]
-```
