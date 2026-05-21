@@ -19,14 +19,4 @@ In modern systems, the buffer is usually managed by a broker like **RabbitMQ** o
 ## Decoupling Diagram
 
 ```mermaid
-graph LR
-    P[Producer (Web Server)]
-    Q[(Message Queue)]
-    C1[Consumer 1 (Worker)]
-    C2[Consumer 2 (Worker)]
-    C3[Consumer 3 (Worker)]
-
-    P -- Publishes Message --> Q
-    Q -- Consumes Message --> C1
-    Q -- Consumes Message --> C2
-    Q -- Consumes Message --> C3
+graph LR; P[Producer] --> Q[(Queue)]; Q --> C1[Worker 1]; Q --> C2[Worker 2]; Q --> C3[Worker 3];
