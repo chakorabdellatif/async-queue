@@ -16,21 +16,4 @@ Brokers handle the complex networking, persistence, and routing rules required t
 ## Routing Diagram
 
 ```mermaid
-graph TD
-    A[Service A (Producer)]
-    B((Message Broker))
-    C[Service C (Producer)]
-    D[Service D (Consumer)]
-    E[Service E (Consumer)]
-
-    A --> B
-    C --> B
-    B --> D
-    B --> E
-
-    linkStyle 0,1,2,3 stroke:#333,stroke-width:2px;
-    
-    A --- |Send| B
-    C --- |Send| B
-    B --- |Route & Deliver| D
-    B --- |Route & Deliver| E
+graph TD; A[Producer A] --> B((Message Broker)); C[Producer C] --> B; B --> D[Consumer D]; B --> E[Consumer E];
